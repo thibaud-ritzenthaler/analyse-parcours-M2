@@ -1,0 +1,48 @@
+---
+title: "Dossier enquête génération"
+output: pdf_document
+---
+
+```{r include = F}
+library(tidyverse)
+library(questionr)
+library(readxl)
+setwd("C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/Trajectoires dossier Enquete generation")
+habitat_mois <- read_excel("./GEN2010Hmois.xls")
+```
+
+Vous disposez des bases de l’enquête génération 2010 du Cereq, interrogation à 5 ans. Base des caractéristiques et informations complètes (ind2010_champcomplet au format SAS et txt) et d’une base xls avec l’identifiant et la situation résidentielle pour chaque mois de l’enquête (HMOISX) ( 01 = Vit chez ses parents ; 02 = Vit en couple ; 03 = Vit seul (y compris foyer, colocation)).
+Nous nous intéressons à la thématique suivante : **Les trajectoires résidentielles et professionnelles des jeunes**
+
+### Partie 1
+### Préparation du fichier Gen2010_HMOIS
+Préparer les données sur les trajectoires résidentielles pour une analyse de séquence (choix de la durée d’observation, ajustement des données dans la base au niveau des colonnes, correctifs cellules vides etc.). Les données sont en date, il les faut en durée depuis la sortie d’études (utilisation d’un programme boucle).
+
+```{r}
+habitat_not_na <- as_tibble(freq.na(habitat_mois)) %>% bind_cols(month = rownames(freq.na(habitat_mois))) %>% filter(`%` == 0)
+habitat_mois_cut <- habitat_mois %>% select(all_of(pull(habitat_not_na,month)))
+# Refaire unn décalage vers la gauche
+# evc les info du dessus
+
+hab_parcours <- habitat_mois %>% pivot_longer(colnames(habitat_mois)[-1], values_drop_na = T) %>% group_by(IDENT) %>% mutate(month = row_number()) %>% select(-name) %>%pivot_wider(names_from = month,values_from = value)
+
+habitat_not_na <- as_tibble(freq.na(hab_parcours)) %>% bind_cols(month = rownames(freq.na(hab_parcours))) %>% filter(`%` == 0)
+hab_parcours <- hab_parcours %>% select(all_of(pull(habitat_not_na,month)))
+
+```
+
+```{r}
+library(haven)
+
+indiv <- read_sas("./indiv10_champcomp.sas7bdat")
+indiv_bac_pro <- indiv %>% filter(Q35NEW == 3)
+bac_pro_parcours_pro <- indiv_bac_pro %>% select(IDENT, starts_with('MOIS'), -MOISEDI)
+# Q35NEW, Q40A, Q40B, DIS09
+
+bac_pro_parcours_pro <- bac_pro_parcours_pro %>% pivot_longer(colnames(bac_pro_parcours_pro)[-1], values_drop_na = T) %>% mutate(name = substr(name, 5, nchar(name))) %>% arrange(name) %>% group_by(IDENT) %>% mutate(month = row_number()) %>% select(-name) %>% pivot_wider(names_from = month,values_from = value)
+bac_pro_not_na <- as_tibble(freq.na(bac_pro_parcours_pro)) %>% bind_cols(month = rownames(freq.na(bac_pro_parcours_pro))) %>% filter(`%` == 0)
+bac_pro_parcours_pro <- bac_pro_parcours_pro %>% select(all_of(pull(bac_pro_not_na,month)))
+
+
+
+```
