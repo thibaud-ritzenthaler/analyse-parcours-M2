@@ -7,7 +7,8 @@ output: pdf_document
 library(tidyverse)
 library(questionr)
 library(readxl)
-setwd("C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/Trajectoires dossier Enquete generation")
+library(haven)
+# setwd("C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/Trajectoires dossier Enquete generation")
 habitat_mois <- read_excel("./GEN2010Hmois.xls")
 ```
 
@@ -32,17 +33,42 @@ hab_parcours <- hab_parcours %>% select(all_of(pull(habitat_not_na,month)))
 ```
 
 ```{r}
-library(haven)
+
+get_calendar <- function (month_report, month_str) {
+  # adding zero on the name the text
+  for (i in 1:9) {
+    month_zero <- paste0(month_str, 0, as.character(i))
+    month <- paste0(month_str, as.character(i))
+    month_report <- month_report %>% rename(!!month_zero := `month`)
+  }
+
+  # Order columns
+  month_report <- month_report %>% select(order(colnames(.)))
+
+
+  # tranform empty string to na
+  month_report[month_report == ''] <- NA
+
+  # transform absolute month to relative calendar
+  month_report <- month_report %>% pivot_longer(colnames(.)[colnames(.) != "IDENT"], values_drop_na = T) %>% mutate(name = substr(name, 5, nchar(name))) %>% arrange(as.numeric(name)) %>% group_by(IDENT) %>% mutate(month = paste0("CAL",row_number())) %>% select(-name) %>% pivot_wider(names_from = month,values_from = value)
+
+  # list of the na cal values
+  month_report_not_na <- as_tibble(freq.na(month_report)) %>% bind_cols(month = rownames(freq.na(month_report))) %>% filter(missing == 0)
+
+  # remove the na values
+  return(month_report %>% select(all_of(pull(month_report_not_na,month))))
+}
+
 
 indiv <- read_sas("./indiv10_champcomp.sas7bdat")
 indiv_bac_pro <- indiv %>% filter(Q35NEW == 3)
-bac_pro_parcours_pro <- indiv_bac_pro %>% select(IDENT, starts_with('MOIS'), -MOISEDI)
 # Q35NEW, Q40A, Q40B, DIS09
-
-bac_pro_parcours_pro <- bac_pro_parcours_pro %>% pivot_longer(colnames(bac_pro_parcours_pro)[-1], values_drop_na = T) %>% mutate(name = substr(name, 5, nchar(name))) %>% arrange(name) %>% group_by(IDENT) %>% mutate(month = row_number()) %>% select(-name) %>% pivot_wider(names_from = month,values_from = value)
-bac_pro_not_na <- as_tibble(freq.na(bac_pro_parcours_pro)) %>% bind_cols(month = rownames(freq.na(bac_pro_parcours_pro))) %>% filter(`%` == 0)
-bac_pro_parcours_pro <- bac_pro_parcours_pro %>% select(all_of(pull(bac_pro_not_na,month)))
-
+# Create df for histories with calendar
+bac_pro_parcours_pro <- indiv_bac_pro %>% select(IDENT, starts_with('MOIS'), -MOISEDI)
+bac_pro_parcours_hab <- indiv_bac_pro %>% select(IDENT, starts_with('HMOIS'))
+# calendar for the selected pop
+bac_pro_parcours_pro <- get_calendar(month_report = bac_pro_parcours_pro, month_str = "MOIS" )
+bac_pro_parcours_hab <- get_calendar(month_report = bac_pro_parcours_hab, month_str = "HMOIS" )
 
 
 ```
