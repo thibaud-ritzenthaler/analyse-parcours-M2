@@ -1,17 +1,26 @@
 ---
 title: "Analyse des parcours, trajectoires professionnelles et décohabitation des bacs professionnels"
-output: pdf_document
+author: "Baptiste Walter, Thibaud Ritzenthaler"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+    pdf_document :
+        toc: false
 ---
-
-*Baptiste Walter, Thibaud Ritzenthaler*
 
 ```{r setup, include = F, ECHO = F}
 library(tidyverse)
 library(questionr)
 library(readxl)
 library(haven)
+library(knitr)
 ```
 ## Introduction
+
+## Choix de la cohorte : les détenteurs d'un bac professionnel
+
+- Décohabitation
+- Insertion professionnelle
+- Reprise d'études
 
 ## Données
 
@@ -31,7 +40,17 @@ En construisant les "générations" en fonction de la date de sortie de formatio
 
 Dans l'enquête, on trouve deux suivis d'évènements démographiques : le Calendrier Professionnel mensuel et le Calendrier Habitat mensuel. Ces deux variables suivent mois par mois les différents parcours pour chaque individu, en démarrant en novembre 2009 et finissant en juillet 2015.
 
-Tous les individus ne rentrent pas dans l'étude le premier mois, cette dernière commençant à la fin de la formation initiale. Afin de pouvoir réaliser une analyse des parcours comparée, il faut donc réajuster les variables afin que celles-ci ne représentent pas des mois définis, mais des mois passés depuis l'entrée en études.
+La première étape est le tri de la cohorte afin de ne garder que les individus qui nous intéressent dans l'étude, à savoir les diplômés de bac pro. Le filtre se fait grâce à la variable `Q35NEW` et renvoie 1312 individus.
+
+Tous ces individus ne rentrent pas dans l'étude le premier mois, cette dernière commençant à la fin de la formation initiale. Afin de pouvoir réaliser une analyse des parcours comparée, il faut donc réajuster les variables afin que celles-ci ne représentent pas des mois définis, mais des mois passés depuis l'entrée en études. Techniquement, cela se fait grace plusieurs pivots de la table et de suppression des valeurs nulles.
 
 
+Une fois la cohorte initialisée, l'analyse des séquences est réalisée. Elle se divise en plusieurs étapes qui sont la création des séquences, la création d'une matrice de distance entre les séquences, la distinction des classes grâce au dendrogramme de cette matrice, les tests sur l'homogénéité de ces classes et, enfin, l'analyse grâce à la représentation graphique de ces séquences.
 
+## Annexes
+
+## Table des matières
+```{r echo = FALSE}
+source("./render_toc.R")
+render_toc("Analyse.rmd")
+```

@@ -75,7 +75,7 @@ bac_pro_parcours_hab <- get_calendar(month_report = bac_pro_parcours_hab, month_
 
 ```
 
-Filtrer le parcours pro NE MARCHE PAS
+Filtrer le parcours pro A finir
 ```{r}
 bac_pro_parcours_pro_prc <- bac_pro_parcours_pro %>%
         pivot_longer(colnames(.)[colnames(.) != "IDENT"]) %>%
@@ -219,5 +219,5 @@ seqHtplot(seq_croise, group=seq_croise.part6, xtlab=1:30, withlegend=T)
 seqmsplot(seq_croise, group=seq_croise.part6, xtlab=1:30, withlegend=T, title="classe")
 ```
 ```{r}
-seqdplot(seq_croise, group=seq_croise.part6, sortv=ordre, xtlab=1:56, tlim=0, border=NA, withlegend=T, yaxis=F)
+seqdplot(seq_croise, group=seq_croise.part6, sortv=ordre, xtlab=1:52, tlim=0, border=NA, withlegend=T, yaxis=F)
 ```
