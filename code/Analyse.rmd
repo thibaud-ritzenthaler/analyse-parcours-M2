@@ -1,0 +1,37 @@
+---
+title: "Analyse des parcours, trajectoires professionnelles et décohabitation des bacs professionnels"
+output: pdf_document
+---
+
+*Baptiste Walter, Thibaud Ritzenthaler*
+
+```{r setup, include = F, ECHO = F}
+library(tidyverse)
+library(questionr)
+library(readxl)
+library(haven)
+```
+## Introduction
+
+## Données
+
+La source de donnée est la base de l'[Enquête 2013 auprès de la « Génération 2010 » du Cereq](https://www.cereq.fr/enquete-generation-2010-interrogation-2013-bilan-methodologique). Cette enquête a pour objectif d’étudier l’accès à l’emploi des jeunes à l’issue de leur formation initiale. Cela permet d'analyser ces parcours en relation avec leur formation scolaire et les diplômes obtenus. Certaines cohortes font l'objet d'interrogations multiples pour suivre l'évolution de leurs débuts de carrière.
+
+Le dispositif repose sur un calendrier détaillé, mois par mois, décrivant la situation des jeunes. Il offre ainsi la possibilité d'analyser les trajectoires d'entrée dans la vie active. De plus, en comparant les différentes générations, il permet de distinguer les aspects structurels et conjoncturels de l'insertion professionnelle des jeunes.
+
+Le dispositif d'enquêtes "Génération" du Céreq présente cinq dimensions majeures. Il offre un cadre d'analyse homogène pour tous les jeunes sortis du système éducatif la même année, permettant de comparer l'impact de diverses caractéristiques sur leurs trajectoires professionnelles.
+
+Grâce à un questionnaire détaillé et un échantillon important, les enquêtes fournissent des informations riches et diversifiées, prenant en compte des critères tels que le genre, l'origine sociale, la mobilité géographique, etc.
+
+Le recul temporel de trois ans après la sortie du système scolaire permet une analyse plus précise de la stabilité professionnelle. Le suivi longitudinal mois par mois des jeunes permet la construction d'indicateurs et de typologies, offrant une vision multidimensionnelle de l'insertion professionnelle.
+
+En construisant les "générations" en fonction de la date de sortie de formation, le dispositif permet de comparer les effets de la conjoncture du marché du travail pour tous les niveaux de formation, répondant ainsi à des questions cruciales sur les différents parcours.
+
+## Méthodologie
+
+Dans l'enquête, on trouve deux suivis d'évènements démographiques : le Calendrier Professionnel mensuel et le Calendrier Habitat mensuel. Ces deux variables suivent mois par mois les différents parcours pour chaque individu, en démarrant en novembre 2009 et finissant en juillet 2015.
+
+Tous les individus ne rentrent pas dans l'étude le premier mois, cette dernière commençant à la fin de la formation initiale. Afin de pouvoir réaliser une analyse des parcours comparée, il faut donc réajuster les variables afin que celles-ci ne représentent pas des mois définis, mais des mois passés depuis l'entrée en études.
+
+
+

@@ -1,0 +1,223 @@
+---
+title: "Dossier enquête génération"
+output: pdf_document
+---
+
+```{r include = F}
+library(tidyverse)
+library(questionr)
+library(readxl)
+library(haven)
+# setwd("C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/Trajectoires dossier Enquete generation")
+# setwd("C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2")
+habitat_mois <- read_excel("./data/GEN2010Hmois.xls")
+```
+
+Vous disposez des bases de l’enquête génération 2010 du Cereq, interrogation à 5 ans. Base des caractéristiques et informations complètes (ind2010_champcomplet au format SAS et txt) et d’une base xls avec l’identifiant et la situation résidentielle pour chaque mois de l’enquête (HMOISX) ( 01 = Vit chez ses parents ; 02 = Vit en couple ; 03 = Vit seul (y compris foyer, colocation)).
+Nous nous intéressons à la thématique suivante : **Les trajectoires résidentielles et professionnelles des jeunes**
+
+### Partie 1
+### Préparation du fichier Gen2010_HMOIS
+Préparer les données sur les trajectoires résidentielles pour une analyse de séquence (choix de la durée d’observation, ajustement des données dans la base au niveau des colonnes, correctifs cellules vides etc.). Les données sont en date, il les faut en durée depuis la sortie d’études (utilisation d’un programme boucle).
+
+```{r}
+habitat_not_na <- as_tibble(freq.na(habitat_mois)) %>% bind_cols(month = rownames(freq.na(habitat_mois))) %>% filter(`%` == 0)
+habitat_mois_cut <- habitat_mois %>% select(all_of(pull(habitat_not_na,month)))
+# Refaire unn décalage vers la gauche
+# evc les info du dessus
+
+hab_parcours <- habitat_mois %>% pivot_longer(colnames(habitat_mois)[-1], values_drop_na = T) %>% group_by(IDENT) %>% mutate(month = row_number()) %>% select(-name) %>%pivot_wider(names_from = month,values_from = value)
+
+habitat_not_na <- as_tibble(freq.na(hab_parcours)) %>% bind_cols(month = rownames(freq.na(hab_parcours))) %>% filter(`%` == 0)
+hab_parcours <- hab_parcours %>% select(all_of(pull(habitat_not_na,month)))
+
+```
+
+```{r}
+
+get_calendar <- function (month_report, month_str) {
+  # adding zero on the name the text
+  for (i in 1:9) {
+    month_zero <- paste0(month_str, 0, as.character(i))
+    month <- paste0(month_str, as.character(i))
+    month_report <- month_report %>% rename(!!month_zero := `month`)
+  }
+
+  # Order columns
+  month_report <- month_report %>% select(order(colnames(.)))
+
+
+  # tranform empty string to na
+  month_report[month_report == ''] <- NA
+
+  # transform absolute month to relative calendar
+  month_report <- month_report %>% pivot_longer(colnames(.)[colnames(.) != "IDENT"], values_drop_na = T) %>% mutate(name = substr(name, 5, nchar(name))) %>% arrange(as.numeric(name)) %>% group_by(IDENT) %>% mutate(month = paste0("CAL",row_number())) %>% select(-name) %>% pivot_wider(names_from = month,values_from = value)
+
+  # list of the na cal values
+  month_report_not_na <- as_tibble(freq.na(month_report)) %>% bind_cols(month = rownames(freq.na(month_report))) %>% filter(missing == 0)
+
+  # remove the na values
+  return(month_report %>% select(all_of(pull(month_report_not_na,month))))
+}
+
+# setwd("C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2")
+
+indiv <- read_sas("./data/indiv10_champcomp.sas7bdat")
+indiv_bac_pro <- indiv %>% filter(Q35NEW == 3)
+# Q35NEW, Q40A, Q40B, DIS09
+# Create df for histories with calendar
+bac_pro_parcours_pro <- indiv_bac_pro %>% select(IDENT, starts_with('MOIS'), -MOISEDI)
+bac_pro_parcours_hab <- indiv_bac_pro %>% select(IDENT, starts_with('HMOIS'))
+# calendar for the selected pop
+bac_pro_parcours_pro <- get_calendar(month_report = bac_pro_parcours_pro, month_str = "MOIS" )
+bac_pro_parcours_hab <- get_calendar(month_report = bac_pro_parcours_hab, month_str = "HMOIS" )
+
+
+```
+
+Filtrer le parcours pro NE MARCHE PAS
+```{r}
+bac_pro_parcours_pro_prc <- bac_pro_parcours_pro %>%
+        pivot_longer(colnames(.)[colnames(.) != "IDENT"]) %>%
+        mutate(value2 = substr(value, 1,2)) %>%
+        mutate(parc = case_when(
+                (value2 == "O5" | value2 == "O6" | value2 == "11" | value2 == "12") ~ "Recherche d'emploi",
+               (value2 == "O7" | value2 == "O8" | value2 == "13" | value2 == "14") ~ "Inacativite",
+               (value2 == "O9" | value2 == "1O" | value2 == "15" | value2 == "16") ~ "En Formation",
+               (value2 == "17" | value2 == "18") ~ "Reprise d'etude",
+               (value2 == "O1" | value2 == "O2" | value2 == "03" | value2 == "04") ~ "En emploi",
+               (value2 == "21" ) ~ "Vacances",
+               TRUE ~ "Autres"
+        ))%>%
+        select(-value, -value2)%>%
+        pivot_wider(names_from = name,values_from = parc)
+
+bac_pro_parcours_pro_prc <- bac_pro_parcours_pro %>%
+        pivot_longer(colnames(.)[colnames(.) != "IDENT"]) %>%
+        mutate(value2 = substr(value, 1,2)) %>%
+        mutate(parc = case_when(
+                value2 == "05" | value2 == "06" | value2 == "11" | value2 == "12" ~ "Recherche d'emploi",
+                value2 == "07" | value2 == "08" | value2 == "13" | value2 == "14" ~ "Inactivite",
+                value2 == "09" | value2 == "10" | value2 == "15" | value2 == "16" ~ "En Formation",
+                value2 == "17" | value2 == "18" ~ "Reprise d'etude",
+                value2 == "01" | value2 == "02" | value2 == "03" | value2 == "04" ~ "En emploi",
+                value2 == "21" ~ "Vacances",
+                T ~ value2
+        ))%>%
+        select(-value, -value2)%>%
+        pivot_wider(names_from = name,values_from = parc)
+
+01
+#for(i in 1:52) {
+#  CALNum <- paste0("CAL",i )
+#  for (j in 2:1312) {
+#    bac_pro_parcours_pro_prc$CAL1 <- substr(bac_pro_parcours_pro_prc[i][j], 1,2)
+#
+#  }
+#
+#}
+
+
+```
+
+
+Analyse de parcours des bacs pro
+```{r}
+library(FactoMineR)
+library(TraMineR)
+library(cluster)
+library(skimr)
+
+# setwd("C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2")
+
+pro_recode <- read_excel("./data/Pro_recod.xlsx", "nom_car")
+hab_recode <- read_excel("./data/Habitat_recod.xlsx", "nom_car")
+habpro_croise <- read_excel("./data/habpro_croise.xlsx", "concat")
+
+# On prend les donnes du calendrier
+seq_pro <- seqdef(pro_recode, 2:53)
+changement_etats <- seqsubm (seq_pro, method="CONSTANT", cval=1)
+seq_pro.om <- seqdist (seq_pro, method="OM", indel=1, sm=changement_etats)
+ordre <- cmdscale(as.dist(seq_pro.om),k=1)
+seq.agnes <- agnes(as.dist (seq_pro.om), method="ward", keep.diss=F)
+plot (sort(seq.agnes$height, decreasing=TRUE) [1:10], type="s", xlab="nb de classes", ylab="inertie")
+
+```
+
+Réalisation du dendogramme
+```{r}
+plot(as.dendrogram(seq.agnes), leaflab="none")
+```
+
+On prend 8 classes et 5 classes (ruptures).
+```{r}
+seq.part8 <- cutree (seq.agnes, 8)
+seq.part8 <- factor (seq.part8, labels=paste ("classe", 1:8, sep="."))
+seq.part5 <- cutree (seq.agnes, 5)
+seq.part5 <- factor (seq.part5, labels=paste ("classe", 1:5, sep="."))
+```
+```{r}
+round(aggregate(disscenter(as.dist(seq_pro.om), group=seq.part8), list(seq.part8),mean)[,-1],1)
+seqHtplot(seq_pro, group=seq.part8, xtlab=1:30, withlegend=T)
+```
+
+
+Analyse des classes
+```{r}
+seqmsplot(seq_pro, group=seq.part8, xtlab=1:30, withlegend=T, title="classe")
+```
+```{r}
+round(aggregate(disscenter(as.dist(seq_pro.om), group=seq.part5), list(seq.part5),mean)[,-1],1)
+seqHtplot(seq_pro, group=seq.part5, xtlab=1:30, withlegend=T)
+```
+Analyse des classes
+```{r}
+seqmsplot(seq_pro, group=seq.part5, xtlab=1:30, withlegend=T, title="classe")
+```
+
+Pour les habitations
+```{r}
+# On prend les donnes du calendrier
+seq_hab <- seqdef(hab_recode, 2:56)
+changement_etats <- seqsubm (seq_hab, method="CONSTANT", cval=1)
+seq_hab.om <- seqdist (seq_hab, method="OM", indel=1, sm=changement_etats)
+ordre <- cmdscale(as.dist(seq_hab.om),k=1)
+seq_hab.agnes <- agnes(as.dist (seq_hab.om), method="ward", keep.diss=F)
+plot (sort(seq_hab.agnes$height, decreasing=TRUE) [1:10], type="s", xlab="nb de classes", ylab="inertie")
+```
+```{r}
+seq.part7 <- cutree (seq_hab.agnes, 7)
+seq.part7 <- factor (seq.part7, labels=paste ("classe", 1:7, sep="."))
+round(aggregate(disscenter(as.dist(seq_hab.om), group=seq.part7), list(seq.part7),mean)[,-1],1)
+seqHtplot(seq_hab, group=seq.part7, xtlab=1:30, withlegend=T)
+```
+
+Parcours
+```{r}
+seqmsplot(seq_hab, group=seq.part7, xtlab=1:30, withlegend=T, title="classe")
+```
+
+Donnes croisees
+```{r}
+# On prend les donnes du calendrier
+seq_croise <- seqdef(habpro_croise, 2:52)
+changement_etats <- seqsubm (seq_croise, method="CONSTANT", cval=1)
+seq_croise.om <- seqdist (seq_croise, method="OM", indel=1, sm=changement_etats)
+ordre <- cmdscale(as.dist(seq_croise.om),k=1)
+seq_croise.agnes <- agnes(as.dist (seq_croise.om), method="ward", keep.diss=F)
+plot(sort(seq_croise.agnes$height, decreasing=TRUE) [1:10], type="s", xlab="nb de classes", ylab="inertie")
+```
+
+```{r}
+seq_croise.part6 <- cutree (seq_croise.agnes, 6)
+seq_croise.part6 <- factor (seq_croise.part6, labels=paste ("classe", 1:6, sep="."))
+round(aggregate(disscenter(as.dist(seq_croise.om), group=seq_croise.part6), list(seq_croise.part6),mean)[,-1],1)
+seqHtplot(seq_croise, group=seq_croise.part6, xtlab=1:30, withlegend=T)
+```
+
+```{r}
+seqmsplot(seq_croise, group=seq_croise.part6, xtlab=1:30, withlegend=T, title="classe")
+```
+```{r}
+seqdplot(seq_croise, group=seq_croise.part6, sortv=ordre, xtlab=1:56, tlim=0, border=NA, withlegend=T, yaxis=F)
+```
