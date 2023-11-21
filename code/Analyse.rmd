@@ -68,7 +68,7 @@ Une fois la cohorte initialisée, l'analyse des séquences est réalisée. Elle 
 kable(data.frame(Annee = c(0, 1, 2, 3, 4), `Quotient de décohabitation` = c(0.2187,0.3277,0.4558,0.5366,0.6090)),booktabs = T, caption = "Table de décohabitation par années")%>%
   kable_styling(latex_options = c("striped", "HOLD_position"))
 ```
-
+On postule que la décohabitation constitue un phénomène non-renouvelable. En effet, si les individus ont quitté le domicile parental au cours des années, on considère qu'ils ne reviendront plus de manière permanente chez leurs parents. L'analyse de la décohabitation au sein de la cohorte étudiée (bacheliers professionnels) révèle une tendance croissante à la décohabitation au fil du temps. Cependant, dès la première année, on observe une probabilité élevée de décohabitation. Les individus titulaires d'un baccalauréat professionnel ont tendance à quitter le domicile parental rapidement, probablement en raison de leur prise d'autonomie précoce. Par conséquent, la décohabitation ralentit à partir de deux ans après la fin de leur cursus scolaire. Cette décohabitation atteins seulement 60% de probabilité de décohabitation quatre ans après la fin de leurs études.
 
 ## Analyse des séquences
 
