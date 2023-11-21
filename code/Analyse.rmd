@@ -68,7 +68,7 @@ Une fois la cohorte initialisée, l'analyse des séquences est réalisée. Elle 
 kable(data.frame(Annee = c(0, 1, 2, 3, 4), `Quotient de décohabitation` = c(0.2187,0.3277,0.4558,0.5366,0.6090)),booktabs = T, caption = "Table de décohabitation par années")%>%
   kable_styling(latex_options = c("striped", "HOLD_position"))
 ```
-On postule que la décohabitation constitue un phénomène non-renouvelable. En effet, si les individus ont quitté le domicile parental au cours des années, on considère qu'ils ne reviendront plus de manière permanente chez leurs parents. L'analyse de la décohabitation au sein de la cohorte étudiée (bacheliers professionnels) révèle une tendance croissante à la décohabitation au fil du temps. Cependant, dès la première année, on observe une probabilité élevée de décohabitation. Les individus titulaires d'un baccalauréat professionnel ont tendance à quitter le domicile parental rapidement, probablement en raison de leur prise d'autonomie précoce. Par conséquent, la décohabitation ralentit à partir de deux ans après la fin de leur cursus scolaire. Cette décohabitation atteins seulement 60% de probabilité de décohabitation quatre ans après la fin de leurs études.
+On postule que la décohabitation constitue un phénomène non-renouvelable. En effet, si les individus ont quitté le domicile parental au cours des années, on considère qu'ils ne reviendront plus de manière permanente chez leurs parents. L'analyse de la décohabitation au sein de la cohorte étudiée (bacheliers professionnels) révèle une tendance croissante à la décohabitation au fil du temps. Cependant, dès la première année, on observe une probabilité élevée de décohabitation. Les individus titulaires d'un baccalauréat professionnel ont tendance à quitter le domicile parental rapidement, probablement en raison de leur prise d'autonomie précoce. Par conséquent, la décohabitation ralentit à partir de deux ans après la fin de leur cursus scolaire. Cette décohabitation atteint seulement 60% de probabilité de décohabitation quatre ans après la fin de leurs études.
 
 ## Analyse des séquences
 
@@ -86,22 +86,131 @@ seq_pro.om <- seqdist (seq_pro, method="OM", indel=1, sm=changement_etats)
 ordre <- cmdscale(as.dist(seq_pro.om),k=1)
 seq.agnes <- agnes(as.dist (seq_pro.om), method="ward", keep.diss=F)
 
-inert_traj <- plot(sort(seq.agnes$height, decreasing=TRUE) [1:10], type="s", xlab="nb de classes", ylab="inertie")
-dendo_traj <- plot(as.dendrogram(seq.agnes), leaflab="none")
+seq_hab <- seqdef(hab_recode, 2:56)
+changement_etats_hab <- seqsubm (seq_hab, method="CONSTANT", cval=1)
+seq_hab.om <- seqdist (seq_hab, method="OM", indel=1, sm=changement_etats_hab)
+ordre_hab <- cmdscale(as.dist(seq_hab.om),k=1)
+seq_hab.agnes <- agnes(as.dist (seq_hab.om), method="ward", keep.diss=F)
 
-
+seq_croise <- seqdef(habpro_croise, 2:52)
+changement_etats_croise <- seqsubm (seq_croise, method="CONSTANT", cval=1)
+seq_croise.om <- seqdist (seq_croise, method="OM", indel=1, sm=changement_etats_croise)
+ordre_croise <- cmdscale(as.dist(seq_croise.om),k=1)
+seq_croise.agnes <- agnes(as.dist (seq_croise.om), method="ward", keep.diss=F)
 ```
-
-## Annexes
-```{r anx_tab, echo = F}
-
+```{r inert_traj, echo = F, dev='png', fig.show='hide'}
 plot(sort(seq.agnes$height, decreasing=TRUE) [1:10], type="s", xlab="nb de classes", ylab="inertie")
+```
+```{r dendo_traj, echo = F, dev='png', fig.show='hide'}
 plot(as.dendrogram(seq.agnes), leaflab="none")
 ```
+```{r inert_hab, echo = F, dev='png', fig.show='hide'}
+plot(sort(seq_hab.agnes$height, decreasing=TRUE) [1:10], type="s", xlab="nb de classes", ylab="inertie")
+```
+```{r dendo_hab, echo = F, dev='png', fig.show='hide'}
+plot(as.dendrogram(seq_hab.agnes), leaflab="none")
+```
+```{r inert_croise, echo = F, dev='png', fig.show='hide'}
+plot(sort(seq_croise.agnes$height, decreasing=TRUE) [1:10], type="s", xlab="nb de classes", ylab="inertie")
+```
+```{r dendo_croise, echo = F, dev='png', fig.show='hide'}
+plot(as.dendrogram(seq_croise.agnes), leaflab="none")
+```
 
+
+### Trajectoires résidentielles
+
+Grâce aux analyses des inerties et des dendogramme des trajectoires résidentielles (Voir Annexe Fig. 1 & Fig. 2), on retient 5 classes.
+
+
+```{r hab_classes, include = F}
+seq.part_hab <- cutree (seq_hab.agnes, 5)
+seq.part_hab <- factor (seq.part_hab, labels=paste ("classe", 1:5, sep="."))
+round(aggregate(disscenter(as.dist(seq_hab.om), group=seq.part_hab), list(seq.part_hab),mean)[,-1],1)
+```
+
+```{r entrop_trans_hab, echo = F, dev='png', fig.show='hide'}
+seqHtplot(seq_hab, group=seq.part_hab, xtlab=1:56, withlegend=T)
+```
+
+```{r tapis_hab, echo = F, message = F, warning = F, error = F, comment = F, fig.cap="Tapis de séquence des décohabitations"}
+seqiplot(seq_hab, group=seq.part_hab, sortv=ordre_hab, xtlab=1:56, tlim=0, border=NA, withlegend=T, yaxis=FALSE)
+```
+
+Pour les trajectoires résidentielles, les différentes classes sont définies comme telles :
+#### Classe 1 :
+Dans cette classe regroupant 217 individus, soit ~17% de la cohorte, est composé de ceux qui décohabitent du foyer parental dès la fin de leur formation.
+
+#### Classe 2 :
+Cette classe, qui regroupe 278 individus, soit ~21% de la cohorte, est composé des individus vivant dans un foyer en couple dès la fin de leur formation.
+
+#### Classe 3 :
+Dans cette classe regroupant 217 individus, soit ~17% de la cohorte, est composé de ceux qui décohabitent du foyer parental dès la fin de leur formation.
+
+#### Classe 4 :
+Cette classe, qui regroupe 278 individus, soit ~21% de la cohorte, est composé des individus vivant dans un foyer en couple.
+
+#### Classe 5 :
+Cette classe, qui regroupe 278 individus, soit ~21% de la cohorte, est composé des individus vivant dans un foyer en couple.
+
+### Trajectoires professionnelles
+
+Grâce aux analyses des inerties et des dendogramme des trajectoires résidentielles (Voir Annexe Fig. 1 & Fig. 2), on retient 5 classes.
+
+
+```{r pro_classes, include = F}
+seq.part_pro <- cutree (seq.agnes, 5)
+seq.part_pro <- factor (seq.part_pro , labels=paste ("classe", 1:5, sep="."))
+round(aggregate(disscenter(as.dist(seq_pro.om), group=seq.part_pro), list(seq.part_pro),mean)[,-1],1)
+```
+
+```{r entrop_trans_pro, echo = F, dev='png', fig.show='hide'}
+seqHtplot(seq_pro, group=seq.part_pro, xtlab=1:53, withlegend=T)
+```
+
+```{r tapis_pro, echo = F, message = F, warning = F, error = F, comment = F, fig.cap="Tapis de séquence des trajectoires pro"}
+seqiplot(seq_pro, group=seq.part_pro,  sortv=ordre, xtlab=1:53, tlim=0, border=NA, withlegend=T, yaxis=FALSE)
+```
+
+### Trajectoires croisées
+
+Grâce aux analyses des inerties et des dendogramme des trajectoires résidentielles (Voir Annexe Fig. 1 & Fig. 2), on retient 6 classes.
+
+
+```{r croise_classes, include = F}
+seq.part_croise <- cutree (seq_croise.agnes, 5)
+seq.part_croise <- factor (seq.part_croise, labels=paste ("classe", 1:5, sep="."))
+round(aggregate(disscenter(as.dist(seq_croise.om), group=seq.part_croise), list(seq.part_croise),mean)[,-1],1)
+```
+
+```{r entrop_trans_croise, echo = F, dev='png', fig.show='hide'}
+seqHtplot(seq_croise, group=seq.part_croise, xtlab=1:52, withlegend=T)
+```
+
+```{r tapis_croise, echo = F, message = F, warning = F, error = F, comment = F, fig.cap="Tapis de séquence croisé"}
+seqiplot (seq_croise, group=seq.part_croise, sortv=ordre_croise, xtlab=1:52, tlim=0, border=NA, withlegend=T, yaxis=FALSE)
+```
 
 ## Table des matières
-```{r echo = FALSE}
+```{r toc, echo = FALSE}
 source("./render_toc.R")
 render_toc("Analyse.rmd")
 ```
+
+\newpage
+
+## Annexes
+![Inertie des cohabitations.](`r knitr::fig_chunk('inert_traj', 'png')`)
+
+![Dendogramme des cohabitations](`r knitr::fig_chunk('dendo_traj', 'png')`)
+
+![Courbe d’entropie transversale des cohabitations](`r knitr::fig_chunk('dendo_traj', 'png')`)
+
+![Inertie des trajectoires pro](`r knitr::fig_chunk('inert_traj', 'png')`)
+
+![Dendogramme des trajectoires pro](`r knitr::fig_chunk('dendo_traj', 'png')`)
+
+![Inertie des trajectoires croisée](`r knitr::fig_chunk('inert_croise', 'png')`)
+
+![Dendogramme des trajectoires croisée](`r knitr::fig_chunk('dendo_croise', 'png')`)
+

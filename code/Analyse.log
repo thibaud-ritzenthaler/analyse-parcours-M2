@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.1)  21 NOV 2023 09:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.1)  21 NOV 2023 10:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -605,29 +605,60 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 223.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 223.
-<C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/anx_tab-1.pdf, id=18, 469.755pt x 325.215pt>
-File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/anx_tab-1.pdf Graphic file (type pdf)
-<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/anx_tab-1.pdf>
-Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/anx_tab-1.pdf  used on input line 240.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/anx_tab-2.pdf, id=19, 469.755pt x 325.215pt>
-File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/anx_tab-2.pdf Graphic file (type pdf)
-<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/anx_tab-2.pdf>
-Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/anx_tab-2.pdf  used on input line 241.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 240--242
-[]
- []
-
 [2]
-Overfull \vbox (38.91487pt too high) has occurred while \output is active []
+<C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_hab-1.pdf, id=26, 469.755pt x 325.215pt>
+File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_hab-1.pdf Graphic file (type pdf)
+<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_hab-1.pdf>
+Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_hab-1.pdf  used on input line 264.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_pro-1.pdf, id=27, 469.755pt x 325.215pt>
+File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_pro-1.pdf Graphic file (type pdf)
+<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_pro-1.pdf>
+Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_pro-1.pdf  used on input line 280.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[3 <c:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_hab-1.pdf>] [4 <c:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_pro-1.pdf>]
+<C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_croise-1.pdf, id=55, 469.755pt x 325.215pt>
+File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_croise-1.pdf Graphic file (type pdf)
+<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_croise-1.pdf>
+Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_croise-1.pdf  used on input line 295.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-[3 <c:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/anx_tab-1.pdf> <c:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/anx_tab-2.pdf>]
+LaTeX Warning: Hyper reference `choix-de-la-cohorte-:-les-duxe9tenteurs-dux27un-bac-professionnel' on page 5 undefined on input line 307.
 
-LaTeX Warning: Hyper reference `choix-de-la-cohorte-:-les-duxe9tenteurs-dux27un-bac-professionnel' on page 4 undefined on input line 251.
-
-[4] (./Analyse.aux)
+[5 <c:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/tapis_croise-1.pdf>]
+<C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_traj-1.png, id=79, 469.755pt x 325.215pt>
+File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_traj-1.png Graphic file (type png)
+<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_traj-1.png>
+Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_traj-1.png  used on input line 340.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_traj-1.png, id=80, 469.755pt x 325.215pt>
+File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_traj-1.png Graphic file (type png)
+<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_traj-1.png>
+Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_traj-1.png  used on input line 346.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_traj-1.png Graphic file (type png)
+<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_traj-1.png>
+Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_traj-1.png  used on input line 352.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_traj-1.png Graphic file (type png)
+<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_traj-1.png>
+Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_traj-1.png  used on input line 358.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_traj-1.png Graphic file (type png)
+<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_traj-1.png>
+Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_traj-1.png  used on input line 364.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_croise-1.png, id=81, 469.755pt x 325.215pt>
+File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_croise-1.png Graphic file (type png)
+<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_croise-1.png>
+Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_croise-1.png  used on input line 370.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_croise-1.png, id=82, 469.755pt x 325.215pt>
+File: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_croise-1.png Graphic file (type png)
+<use C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_croise-1.png>
+Package pdftex.def Info: C:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_croise-1.png  used on input line 376.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[6 <c:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_traj-1.png>] [7 <c:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_traj-1.png>] [8] [9] [10] [11 <c:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/inert_croise-1.png>] [12 <c:/Users/Tibo/Documents/Demographie/M2S1/UE2 - Analyse des parcours/analyse-parcours-M2/render/Analyse_files/figure-latex/dendo_croise-1.png>] (./Analyse.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
@@ -637,18 +668,18 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 14728 strings out of 476867
- 236356 string characters out of 5805645
+ 14806 strings out of 476867
+ 242059 string characters out of 5805645
  1931785 words of memory out of 5000000
- 35682 multiletter control sequences out of 15000+600000
- 598891 words of font info for 111 fonts, out of 8000000 for 9000
+ 35730 multiletter control sequences out of 15000+600000
+ 602240 words of font info for 116 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 77i,9n,81p,1101b,445s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/Tibo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/Tibo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/Tibo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/Tibo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/Tibo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Analyse.pdf (4 pages, 176839 bytes).
+ 77i,9n,81p,1101b,621s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/Users/Tibo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/Tibo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/Tibo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/Tibo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/Tibo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/Tibo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on Analyse.pdf (12 pages, 4627569 bytes).
 PDF statistics:
- 112 PDF objects out of 1000 (max. 8388607)
- 90 compressed objects within 1 object stream
- 14 named destinations out of 1000 (max. 500000)
- 22603 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 197 PDF objects out of 1000 (max. 8388607)
+ 154 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 500000)
+ 24700 words of extra memory for PDF output out of 24883 (max. 10000000)
 
