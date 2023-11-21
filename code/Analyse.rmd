@@ -12,7 +12,12 @@ library(tidyverse)
 library(questionr)
 library(readxl)
 library(haven)
+library(FactoMineR)
+library(TraMineR)
+library(cluster)
+library(skimr)
 library(knitr)
+library(kableExtra)
 ```
 ## Introduction
 
@@ -54,7 +59,46 @@ Tous ces individus ne rentrent pas dans l'étude le premier mois, cette dernièr
 
 Une fois la cohorte initialisée, l'analyse des séquences est réalisée. Elle se divise en plusieurs étapes qui sont la création des séquences, la création d'une matrice de distance entre les séquences, la distinction des classes grâce au dendrogramme de cette matrice, les tests sur l'homogénéité de ces classes et, enfin, l'analyse grâce à la représentation graphique de ces séquences.
 
+
+## Suivi de cohorte
+
+
+
+```{r table_decohab, echo=FALSE}
+kable(data.frame(Annee = c(0, 1, 2, 3, 4), `Quotient de décohabitation` = c(0.2187,0.3277,0.4558,0.5366,0.6090)),booktabs = T, caption = "Table de décohabitation par années")%>%
+  kable_styling(latex_options = c("striped", "HOLD_position"))
+```
+
+
+## Analyse des séquences
+
+```{r data_load, include = F}
+pro_recode <- read_excel("../data/Pro_recod.xlsx", "nom_car")
+hab_recode <- read_excel("../data/Habitat_recod.xlsx", "nom_car")
+habpro_croise <- read_excel("../data/habpro_croise.xlsx", "concat")
+```
+
+```{r inertie_dendogrammes, include = F}
+# On prend les donnes du calendrier
+seq_pro <- seqdef(pro_recode, 2:53)
+changement_etats <- seqsubm (seq_pro, method="CONSTANT", cval=1)
+seq_pro.om <- seqdist (seq_pro, method="OM", indel=1, sm=changement_etats)
+ordre <- cmdscale(as.dist(seq_pro.om),k=1)
+seq.agnes <- agnes(as.dist (seq_pro.om), method="ward", keep.diss=F)
+
+inert_traj <- plot(sort(seq.agnes$height, decreasing=TRUE) [1:10], type="s", xlab="nb de classes", ylab="inertie")
+dendo_traj <- plot(as.dendrogram(seq.agnes), leaflab="none")
+
+
+```
+
 ## Annexes
+```{r anx_tab, echo = F}
+
+plot(sort(seq.agnes$height, decreasing=TRUE) [1:10], type="s", xlab="nb de classes", ylab="inertie")
+plot(as.dendrogram(seq.agnes), leaflab="none")
+```
+
 
 ## Table des matières
 ```{r echo = FALSE}
